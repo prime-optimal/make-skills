@@ -1,0 +1,1809 @@
+{
+  "flow": [
+    {
+      "id": 10,
+      "mapper": {},
+      "module": "scenario-service:StartSubscenario",
+      "version": 2,
+      "metadata": {
+        "restore": {},
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "interface": [
+          {
+            "help": "",
+            "name": "phone",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": true,
+            "multiline": false
+          },
+          {
+            "help": "",
+            "name": "message",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": true,
+            "multiline": false
+          },
+          {
+            "help": "Name of event, artist, DJ, etc.",
+            "name": "event_requested",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "Date of event (can be a general time period like \"next weekend\")",
+            "name": "event_date",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "Venue of event",
+            "name": "venue",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": false,
+            "multiline": false
+          }
+        ]
+      },
+      "parameters": {}
+    },
+    {
+      "id": 13,
+      "mapper": {
+        "key": "{{10.phone}}",
+        "returnWrapped": false
+      },
+      "module": "datastore:GetRecord",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "key",
+            "type": "text",
+            "label": "Key",
+            "required": true
+          },
+          {
+            "name": "returnWrapped",
+            "type": "boolean",
+            "label": "Return Wrapped Output",
+            "required": true
+          }
+        ],
+        "restore": {
+          "parameters": {
+            "datastore": {
+              "label": "Vinny - Incoming Guestlist"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "interface": [
+          {
+            "help": "",
+            "name": "fields",
+            "spec": [
+              {
+                "name": "fname",
+                "type": "text",
+                "label": "Fname",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "name": "lname",
+                "type": "text",
+                "label": "Lname",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "name": "females",
+                "type": "number",
+                "label": "Females",
+                "default": null,
+                "required": false
+              },
+              {
+                "name": "males",
+                "type": "text",
+                "label": "Males",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "name": "venue_name",
+                "type": "text",
+                "label": "Venue name",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "name": "event_requested",
+                "type": "text",
+                "label": "Event requested",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "name": "event_date",
+                "type": "text",
+                "label": "Event date",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "name": "referral_source",
+                "type": "text",
+                "label": "Referral source",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "name": "instagram_handle",
+                "type": "text",
+                "label": "Instagram handle",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "name": "event_found_performer",
+                "type": "text",
+                "label": "Event Found Performer",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "name": "event_found_venue",
+                "type": "text",
+                "label": "Event Found Venue",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "name": "event_found_date",
+                "type": "text",
+                "label": "Event Found Date",
+                "default": null,
+                "required": false,
+                "multiline": false
+              }
+            ],
+            "type": "collection",
+            "label": "Fields",
+            "required": false
+          },
+          {
+            "name": "warm_handoff",
+            "type": "text",
+            "label": "Warm handoff",
+            "default": null,
+            "required": false,
+            "multiline": false
+          },
+          {
+            "name": "missing",
+            "spec": {
+              "type": "text",
+              "default": null,
+              "required": false,
+              "multiline": false
+            },
+            "type": "array",
+            "label": "Missing",
+            "required": false
+          },
+          {
+            "name": "aitable_guest_record_id",
+            "type": "text",
+            "label": "AITable Guest Record ID",
+            "default": null,
+            "required": false,
+            "multiline": false
+          },
+          {
+            "name": "aitable_event_record_id",
+            "type": "text",
+            "label": "AITable Event Record ID",
+            "default": null,
+            "required": false,
+            "multiline": false
+          },
+          {
+            "name": "last_outbound_draft",
+            "type": "text",
+            "label": "Last Outbound Draft",
+            "default": null,
+            "required": false,
+            "multiline": false
+          },
+          {
+            "name": "last_inbound_reply",
+            "type": "text",
+            "label": "Last Inbound Reply",
+            "default": null,
+            "required": false,
+            "multiline": false
+          },
+          {
+            "name": "imessage_capable",
+            "type": "boolean",
+            "label": "iMessage Capable",
+            "required": false
+          },
+          {
+            "name": "rcs_capable",
+            "type": "boolean",
+            "label": "RCS Capable",
+            "required": false
+          },
+          {
+            "name": "sms_capable",
+            "type": "boolean",
+            "label": "SMS Capable",
+            "required": false
+          },
+          {
+            "name": "first message",
+            "type": "text",
+            "label": null,
+            "default": null,
+            "required": false,
+            "multiline": false
+          },
+          {
+            "name": "flags",
+            "type": "text",
+            "label": "Flags"
+          },
+          {
+            "name": "priority",
+            "type": "text",
+            "label": "Priority"
+          },
+          {
+            "name": "category",
+            "type": "text",
+            "label": "Category"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "datastore",
+            "type": "datastore",
+            "label": "Data store",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "datastore": 83707
+      }
+    },
+    {
+      "id": 15,
+      "mapper": {
+        "data": {
+          "phone": "{{10.phone}}",
+          "message": "{{10.message}}"
+        }
+      },
+      "module": "scenario-service:CallSubscenario",
+      "version": 2,
+      "metadata": {
+        "expect": [
+          {
+            "name": "data",
+            "spec": [
+              {
+                "name": "message",
+                "type": "text",
+                "label": "",
+                "required": true
+              },
+              {
+                "name": "phone",
+                "type": "text",
+                "label": "",
+                "required": true
+              }
+            ],
+            "type": "collection",
+            "label": "Scenario Inputs"
+          }
+        ],
+        "restore": {
+          "parameters": {
+            "scenario": {
+              "label": "2A: Extract & Classify"
+            }
+          }
+        },
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Start Evalulator"
+        },
+        "interface": [
+          {
+            "help": "Guest first name. Cannot be 'Chase' (that's the promoter)",
+            "name": "fname",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "Guest last name",
+            "name": "lname",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "Number of females in the group. 0 if not mentioned",
+            "name": "girls",
+            "type": "number",
+            "label": "",
+            "default": null,
+            "required": false
+          },
+          {
+            "help": "Number of males in the group. 0 if not mentioned",
+            "name": "guys",
+            "type": "number",
+            "label": "",
+            "default": null,
+            "required": false
+          },
+          {
+            "help": "Canonical venue name (XS, LIV, EBC, Drais, Omnia, Hakkasan, LIV Beach)",
+            "name": "venue",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "Artist or DJ name the guest is asking about",
+            "name": "event_request",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "YYYY-MM-DD or empty if not mentioned",
+            "name": "event_date",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "Who referred the guest, if mentioned",
+            "name": "referral",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "Instagram handle, if mentioned",
+            "name": "instagram",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "normal / high / urgent",
+            "name": "priority",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": true,
+            "multiline": false
+          },
+          {
+            "help": "Primary category: standard, bachelorette, bottle-service, large-group, all-male, all-female, schedule-inquiry",
+            "name": "category",
+            "type": "text",
+            "label": "",
+            "default": "",
+            "required": true,
+            "multiline": false
+          }
+        ],
+        "parameters": [
+          {
+            "name": "scenario",
+            "type": "scenario",
+            "label": "Scenario",
+            "required": true
+          },
+          {
+            "name": "shouldWaitForExecutionEnd",
+            "type": "boolean",
+            "label": "Wait for the scenario to finish",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "scenario": "SCN_4654317",
+        "shouldWaitForExecutionEnd": true
+      }
+    },
+    {
+      "id": 2,
+      "tools": [
+        {
+          "flow": [
+            {
+              "id": 34,
+              "mapper": {
+                "data": {
+                  "phone": "{{2.data.phone}}",
+                  "venue": "{{2.data.venue}}",
+                  "performer": "{{2.data.performer}}",
+                  "raw_query": "{{2.data.raw_query}}",
+                  "event_date": "{{2.data.event_date}}",
+                  "today_date": "{{2.data.today_date}}"
+                }
+              },
+              "module": "scenario-service:CallSubscenario",
+              "version": 2,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "data",
+                    "spec": [
+                      {
+                        "name": "performer",
+                        "type": "text",
+                        "label": ""
+                      },
+                      {
+                        "name": "venue",
+                        "type": "text",
+                        "label": ""
+                      },
+                      {
+                        "name": "event_date",
+                        "type": "text",
+                        "label": ""
+                      },
+                      {
+                        "name": "raw_query",
+                        "type": "text",
+                        "label": "",
+                        "required": true
+                      },
+                      {
+                        "name": "today_date",
+                        "type": "text",
+                        "label": "",
+                        "required": true
+                      },
+                      {
+                        "name": "phone",
+                        "type": "text",
+                        "label": "",
+                        "required": true
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Scenario Inputs"
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "data": {
+                      "nested": {
+                        "phone": {
+                          "extra": {
+                            "aiHelp": "Guest phone (E.164) — DS key for writing event results."
+                          }
+                        },
+                        "venue": {
+                          "extra": {
+                            "aiHelp": "Venue name from extraction. Empty if not specified."
+                          }
+                        },
+                        "performer": {
+                          "extra": {
+                            "aiHelp": "Artist/DJ name from extraction. Empty if not specified."
+                          }
+                        },
+                        "raw_query": {
+                          "extra": {
+                            "aiHelp": "Original guest message for fuzzy matching context."
+                          }
+                        },
+                        "event_date": {
+                          "extra": {
+                            "aiHelp": "Date from extraction (YYYY-MM-DD). Empty if not specified."
+                          }
+                        },
+                        "today_date": {
+                          "extra": {
+                            "aiHelp": "Current date YYYY-MM-DD for resolving relative dates."
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "parameters": {
+                    "scenario": {
+                      "label": "2B: Event Search"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 1200,
+                  "y": 250
+                },
+                "parameters": [
+                  {
+                    "name": "scenario",
+                    "type": "scenario",
+                    "label": "Scenario",
+                    "required": true
+                  },
+                  {
+                    "name": "shouldWaitForExecutionEnd",
+                    "type": "boolean",
+                    "label": "Wait for the scenario to finish",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "scenario": "SCN_4654768",
+                "shouldWaitForExecutionEnd": true
+              }
+            }
+          ],
+          "name": "2B: Event Search",
+          "options": {
+            "useScenarioNameAndDescription": true
+          },
+          "description": "Use this when you don't already know exactly which event the guest wants to go for.\n\nFor example, if you only know the artist/performer/DJ they want to see, then use this."
+        },
+        {
+          "flow": [
+            {
+              "id": 50,
+              "mapper": {
+                "tools": [
+                  "search_artists"
+                ],
+                "prompt": "{{2.prompt}}",
+                "disableSystemPrompt": false
+              },
+              "module": "mcp-client:DoAnAction",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "tools",
+                    "type": "select",
+                    "label": "Tools",
+                    "multiple": true,
+                    "required": true
+                  },
+                  {
+                    "name": "prompt",
+                    "type": "text",
+                    "label": "Task",
+                    "required": true
+                  },
+                  {
+                    "name": "disableSystemPrompt",
+                    "type": "boolean",
+                    "label": "Disable system prompt",
+                    "required": true
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "tools": {
+                      "mode": "chose",
+                      "label": [
+                        "Search artistsSearch artists by name and return their upcoming events."
+                      ]
+                    },
+                    "prompt": {
+                      "extra": {
+                        "aiHelp": "Describe the task you want to perform"
+                      }
+                    }
+                  },
+                  "parameters": {
+                    "account": {
+                      "data": {
+                        "scoped": "true",
+                        "connection": "mcp"
+                      },
+                      "label": "Vinny Events MCP (Cloudflare D1) (urvenue-guestlist.prime-optimal.workers.dev [Token] [http])"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 1200,
+                  "y": 450
+                },
+                "parameters": [
+                  {
+                    "name": "account",
+                    "type": "account:mcp",
+                    "label": "Connection",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "account": 4726904
+              }
+            }
+          ],
+          "name": "Search Artists",
+          "description": "Search events by artist name when you know the artist name, but don't know the venue."
+        }
+      ],
+      "mapper": {
+        "files": [],
+        "message": "Phone: {{10.phone}}\nToday: {{formatDate(now; \"YYYY-MM-DD\")}}\n\n## Already Collected\nFirst Name: {{ifempty(if(substring(15.fname; 0; 3) = \"/**\"; \"\"; 15.fname); 13.fields.fname)}}\nLast Name: {{ifempty(if(substring(15.lname; 0; 3) = \"/**\"; \"\"; 15.lname); 13.fields.lname)}}\nGirls: {{ifempty(max(15.girls; 0); 13.fields.females)}}\nGuys: {{ifempty(max(15.guys; 0); 13.fields.males)}}\nEvent Requested: {{ifempty(if(substring(15.event_request; 0; 3) = \"/**\"; \"\"; 15.event_request); 13.fields.event_requested)}}\nVenue: {{ifempty(if(substring(15.venue; 0; 3) = \"/**\"; \"\"; 15.venue); 13.fields.venue_name)}}\nEvent Date: {{ifempty(if(substring(15.event_date; 0; 3) = \"/**\"; \"\"; 15.event_date); 13.fields.event_date)}}\nReferral: {{ifempty(if(substring(15.referral; 0; 3) = \"/**\"; \"\"; 15.referral); 13.fields.referral_source)}}\nInstagram: {{ifempty(if(substring(15.instagram; 0; 3) = \"/**\"; \"\"; 15.instagram); 13.fields.instagram_handle)}}\nPriority: {{ifempty(if(substring(15.priority; 0; 3) = \"/**\"; \"\"; 15.priority); 13.priority)}}\nCategory: {{ifempty(if(substring(15.category; 0; 3) = \"/**\"; \"\"; 15.category); 13.category)}}\n\n## Event Search Result (from DS)\nPerformer: {{13.fields.event_found_performer}}\nVenue: {{13.fields.event_found_venue}}\nDate: {{13.fields.event_found_date}}\n\n## Last Message Sent to Guest\n{{13.last_outbound_draft}}\n\n## Guest's Reply\n{{10.message}}\n\n## Guest's First Message\n{{13.`first message`}}",
+        "timeout": "",
+        "threadId": "{{13.aitable_guest_record_id}}",
+        "outputType": "text",
+        "modelConfig": {
+          "recursionLimit": 50,
+          "iterationsFromHistoryCount": "20"
+        },
+        "defaultModel": "large",
+        "systemPrompt": "You are Adriana, a friendly nightclub guestlist assistant working for a Las Vegas promoter named Chase. Guests text Chase to get on the guest list, and you handle the intake — collecting their info, finding the right event, and drafting a message for Chase to review before anything gets sent.\n\n## How This Works\nChase reviews your drafts in AITable. When he approves one, it gets sent to the guest AS-IS. So write every draft as if you are texting the guest directly.\n\n## CRITICAL: Your Output\nYour text response IS the draft message to the guest.\n- Do NOT include internal notes, field summaries, or status updates\n- Do NOT address Chase — the guest receives your text verbatim\n- ONLY output the text message the guest will receive\n- Your draft is automatically saved to AITable — you do NOT need to save it yourself\n\n## Tool Usage\nYou have 2 event search tools:\n1. **Search Artists** — quick natural language search. Pass a query like \"search for Dombresky events\".\n2. **2B: Event Search** — structured event lookup that also saves results. Use when you know the performer, venue, or date.\n\nSearch for events on the FIRST message when the guest mentions a performer, venue, or date. On follow-up messages, you usually don't need to search again — check the \"Already Collected\" and \"Event Search Result\" sections first.\n\nWorkflow:\n1. If needed, search for events using either tool\n2. Write your draft message\n3. Return ONLY the draft message text (it gets saved automatically)\n\n## Fields to Collect\nRequired before intake is complete:\n- First and last name\n- Party size (girls and guys)\n- Event/performer they want\n\nDate and venue come from event search — don't pester for exact dates.\n\n## Extraction Rules\n- \"for [name]\" at a club = PERFORMER, not guest name\n- fname cannot be \"Chase\" — that's the promoter\n- If you already have fname, a single new name is probably lname\n- If guest says \"this weekend\" or \"next month\" — DO NOT ASSUME A DATE. Search and suggest.\n\n\n\nRules:\n- Under 4 sentences, no emojis, casual and friendly\n- Use their first name if known\n- Reference venue/DJ naturally from search results\n- Never state counts back awkwardly\n- Ask about group size naturally with an example format\n- Ask for last name casually: \"what's your last name? just need it to match your ID\"\n- Always suggest the SOONEST upcoming date first\n- NEVER ask for info you already have\n\n## First Contact vs Reply\n- First message: mention Chase asked you to reach out\n- Reply: don't re-introduce yourself\n- If all info collected: brief acknowledgment, confirmation coming separately\n\n## CRITICAL RULES\n- ALWAYS search events before mentioning any event details (first message)\n- NEVER send messages directly — Chase approves before anything is sent\n- NEVER reveal you are an AI",
+        "reasoningEffort": "low"
+      },
+      "module": "ai-local-agent:RunLocalAIAgent",
+      "version": 0,
+      "metadata": {
+        "expect": [
+          {
+            "name": "defaultModel",
+            "type": "select",
+            "label": "Model",
+            "required": true
+          },
+          {
+            "name": "reasoningEffort",
+            "type": "select",
+            "label": "Reasoning effort",
+            "validate": {
+              "enum": [
+                "low"
+              ]
+            }
+          },
+          {
+            "name": "systemPrompt",
+            "type": "text",
+            "label": "Instructions"
+          },
+          {
+            "name": "message",
+            "type": "text",
+            "label": "Input",
+            "required": true
+          },
+          {
+            "name": "files",
+            "spec": [
+              {
+                "name": "fileName",
+                "type": "filename",
+                "label": "File name",
+                "semantic": "file:name"
+              },
+              {
+                "name": "data",
+                "type": "buffer",
+                "label": "Data",
+                "semantic": "file:data"
+              }
+            ],
+            "type": "array",
+            "label": "Input files"
+          },
+          {
+            "name": "threadId",
+            "type": "text",
+            "label": "Conversation ID"
+          },
+          {
+            "name": "modelConfig",
+            "spec": [
+              {
+                "name": "tokenLimit",
+                "type": "hidden",
+                "label": "Max output tokens"
+              },
+              {
+                "name": "recursionLimit",
+                "type": "hidden",
+                "label": "Steps per agent call"
+              },
+              {
+                "name": "iterationsFromHistoryCount",
+                "type": "number",
+                "label": "Maximum conversation history"
+              }
+            ],
+            "type": "collection",
+            "label": "Model configuration"
+          },
+          {
+            "name": "timeout",
+            "type": "number",
+            "label": "Step timeout",
+            "validate": {
+              "max": 600,
+              "min": 120
+            }
+          },
+          {
+            "name": "outputType",
+            "type": "select",
+            "label": "Response format",
+            "required": true,
+            "validate": {
+              "enum": [
+                "text",
+                "make-schema"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "files": {
+              "mode": "chose"
+            },
+            "outputType": {
+              "label": "Text"
+            },
+            "defaultModel": {
+              "mode": "chose",
+              "label": "LargeModel: gpt-5-mini. Reasoning: low. Powerful model built for complex logic puzzles and high-level reasoning tasks"
+            },
+            "reasoningEffort": {
+              "mode": "chose",
+              "label": "Low"
+            }
+          },
+          "parameters": {
+            "makeConnectionId": {
+              "data": {
+                "scoped": "true",
+                "connection": "ai-provider"
+              },
+              "label": "My Make's AI Provider connection"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 900,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "makeConnectionId",
+            "type": "account:ai-provider,openai-gpt-3,anthropic-claude,gemini-ai-q9zyjp,ai-agent-foundry-openai,ai-agent-foundry-non-openai,mistral-ai,cohere,groq,ai-agent-xai,amazon-bedrock,ai-agent-openai-compatible",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "makeConnectionId": 4719756
+      }
+    },
+    {
+      "id": 44,
+      "mapper": {
+        "fields": {
+          "Phone": "{{10.phone}}",
+          "Status": "draft",
+          "Direction": "📬 outbound",
+          "Last Name": "{{15.lname}}",
+          "First Name": "{{15.fname}}",
+          "Draft Message": "{{2.response}}"
+        },
+        "spaceId": "spcGaCMuSZBA3",
+        "fieldKey": "name",
+        "datasheetId": "dstl8mbaBEj3ef7zs6"
+      },
+      "module": "apitable:createRecords",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "spaceId",
+            "type": "select",
+            "label": "Space",
+            "required": true
+          },
+          {
+            "name": "datasheetId",
+            "type": "select",
+            "label": "Datasheet",
+            "required": true
+          },
+          {
+            "name": "viewId",
+            "type": "select",
+            "label": "View"
+          },
+          {
+            "name": "fieldKey",
+            "type": "select",
+            "label": "Field Key",
+            "validate": {
+              "enum": [
+                "name",
+                "id"
+              ]
+            }
+          },
+          {
+            "name": "fields",
+            "spec": [
+              {
+                "name": "Phone",
+                "type": "text"
+              },
+              {
+                "name": "Guest Name",
+                "type": "text"
+              },
+              {
+                "name": "Draft Message",
+                "type": "text"
+              },
+              {
+                "name": "Direction",
+                "type": "select",
+                "validate": {
+                  "enum": [
+                    "📧  inbound",
+                    "📬 outbound",
+                    "outbound",
+                    "inbound"
+                  ]
+                }
+              },
+              {
+                "name": "Status",
+                "type": "select",
+                "validate": {
+                  "enum": [
+                    "draft",
+                    "denied",
+                    "pending",
+                    "sent",
+                    "unmatched"
+                  ]
+                }
+              },
+              {
+                "name": "Deny Reason",
+                "type": "text"
+              },
+              {
+                "name": "Original Draft",
+                "type": "text"
+              },
+              {
+                "name": "Sent At",
+                "type": "date"
+              },
+              {
+                "name": "Approved At",
+                "type": "date"
+              },
+              {
+                "name": "Long text",
+                "type": "text"
+              },
+              {
+                "name": "First Name",
+                "type": "text"
+              },
+              {
+                "name": "Last Name",
+                "type": "text"
+              }
+            ],
+            "type": "collection",
+            "label": "Fields"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "fields": {
+              "nested": {
+                "Status": {
+                  "mode": "chose",
+                  "label": "draft"
+                },
+                "Direction": {
+                  "mode": "chose",
+                  "label": "📬 outbound"
+                }
+              }
+            },
+            "viewId": {
+              "mode": "chose"
+            },
+            "spaceId": {
+              "mode": "chose",
+              "label": "XCTV"
+            },
+            "fieldKey": {
+              "mode": "chose",
+              "label": "Name"
+            },
+            "datasheetId": {
+              "mode": "chose",
+              "label": "Messages"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "apitable"
+              },
+              "label": "AITable"
+            }
+          }
+        },
+        "designer": {
+          "x": 1200,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:apitable",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 3371846
+      }
+    },
+    {
+      "id": 53,
+      "mapper": {
+        "url": "https://aitable.ai/fusion/v1/datasheets/dstl8mbaBEj3ef7zs6/records?fieldKey=name",
+        "method": "patch",
+        "contentType": "custom",
+        "shareCookies": false,
+        "parseResponse": true,
+        "allowRedirects": true,
+        "rawBodyContent": "{\"records\": [{\"recordId\": \"{{44.recordId}}\", \"fields\": {\"Guest\": [\"{{13.aitable_guest_record_id}}\"]}}]}",
+        "stopOnHttpError": true,
+        "contentTypeValue": "application/json",
+        "requestCompressedContent": true
+      },
+      "module": "http:MakeRequest",
+      "version": 4,
+      "metadata": {
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "get",
+                "head",
+                "post",
+                "put",
+                "patch",
+                "delete",
+                "options"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": {
+              "name": "value",
+              "spec": [
+                {
+                  "name": "name",
+                  "type": "text",
+                  "label": "Name",
+                  "required": true,
+                  "validate": {
+                    "pattern": "^[-!#$%&'*+.^_`|~0-9A-Za-z]+$"
+                  }
+                },
+                {
+                  "name": "value",
+                  "type": "text",
+                  "label": "Value"
+                }
+              ],
+              "type": "collection",
+              "label": "Header"
+            },
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "queryParameters",
+            "spec": {
+              "name": "value",
+              "spec": [
+                {
+                  "name": "name",
+                  "type": "text",
+                  "label": "Name",
+                  "required": true
+                },
+                {
+                  "name": "value",
+                  "type": "text",
+                  "label": "Value"
+                }
+              ],
+              "type": "collection",
+              "label": "Parameter"
+            },
+            "type": "array",
+            "label": "Query parameters"
+          },
+          {
+            "name": "contentType",
+            "type": "select",
+            "label": "Body content type",
+            "validate": {
+              "enum": [
+                "json",
+                "multipart",
+                "urlEncoded",
+                "custom"
+              ]
+            }
+          },
+          {
+            "name": "parseResponse",
+            "type": "boolean",
+            "label": "Parse response",
+            "required": true
+          },
+          {
+            "name": "stopOnHttpError",
+            "type": "boolean",
+            "label": "Return error if HTTP request fails",
+            "required": true
+          },
+          {
+            "name": "timeout",
+            "type": "uinteger",
+            "label": "Timeout",
+            "validate": {
+              "max": 300,
+              "min": 1
+            }
+          },
+          {
+            "name": "allowRedirects",
+            "type": "boolean",
+            "label": "Allow redirects",
+            "required": true
+          },
+          {
+            "name": "shareCookies",
+            "type": "boolean",
+            "label": "Share cookies with other HTTP modules",
+            "required": true
+          },
+          {
+            "name": "requestCompressedContent",
+            "type": "boolean",
+            "label": "Request compressed content",
+            "required": true
+          },
+          {
+            "name": "contentTypeValue",
+            "type": "text",
+            "label": "Content type value",
+            "required": true
+          },
+          {
+            "name": "rawBodyContent",
+            "type": "buffer",
+            "label": "Body content",
+            "required": true
+          },
+          {
+            "name": "paginationType",
+            "type": "select",
+            "label": "Pagination type",
+            "validate": {
+              "enum": [
+                "offsetBased",
+                "pageBased",
+                "urlBased",
+                "tokenBased"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "method": {
+              "mode": "chose",
+              "label": "PATCH"
+            },
+            "headers": {
+              "mode": "chose"
+            },
+            "contentType": {
+              "label": "CustomEnter data using a custom content type, such as text/plain."
+            },
+            "shareCookies": {
+              "mode": "chose"
+            },
+            "parseResponse": {
+              "mode": "chose"
+            },
+            "allowRedirects": {
+              "mode": "chose"
+            },
+            "paginationType": {
+              "label": "Empty"
+            },
+            "queryParameters": {
+              "mode": "chose"
+            },
+            "stopOnHttpError": {
+              "mode": "chose"
+            },
+            "requestCompressedContent": {
+              "mode": "chose"
+            }
+          },
+          "parameters": {
+            "tlsType": {
+              "label": "Empty"
+            },
+            "proxyKeychain": {
+              "label": "Choose a key"
+            },
+            "apiKeyKeychain": {
+              "label": "AITable API v3"
+            },
+            "authenticationType": {
+              "label": "API keyUse when the service requires an API key."
+            }
+          }
+        },
+        "designer": {
+          "x": 1500,
+          "y": 0,
+          "name": "Link Messages to Guest"
+        },
+        "interface": [
+          {
+            "name": "data",
+            "type": "any",
+            "label": "Data"
+          },
+          {
+            "name": "statusCode",
+            "type": "number",
+            "label": "Status Code"
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "content-length",
+                "type": "text",
+                "label": "Content-Length"
+              },
+              {
+                "name": "content-encoding",
+                "type": "text",
+                "label": "Content-Encoding"
+              },
+              {
+                "name": "content-type",
+                "type": "text",
+                "label": "Content-Type"
+              },
+              {
+                "name": "server",
+                "type": "text",
+                "label": "Server"
+              },
+              {
+                "name": "cache-control",
+                "type": "text",
+                "label": "Cache-Control"
+              },
+              {
+                "name": "set-cookie",
+                "spec": {
+                  "type": "text"
+                },
+                "type": "array",
+                "label": "Set-Cookie"
+              }
+            ],
+            "type": "collection",
+            "label": "Headers"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "authenticationType",
+            "type": "select",
+            "label": "Authentication type",
+            "required": true,
+            "validate": {
+              "enum": [
+                "noAuth",
+                "apiKey",
+                "basicAuth",
+                "oAuth"
+              ]
+            }
+          },
+          {
+            "name": "tlsType",
+            "type": "select",
+            "label": "Transport layer security (TLS)",
+            "validate": {
+              "enum": [
+                "mTls",
+                "tls"
+              ]
+            }
+          },
+          {
+            "name": "proxyKeychain",
+            "type": "keychain:proxy",
+            "label": "Proxy"
+          },
+          {
+            "name": "apiKeyKeychain",
+            "type": "keychain:apikeyauth",
+            "label": "Credentials",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "tlsType": "",
+        "proxyKeychain": "",
+        "apiKeyKeychain": 88286,
+        "authenticationType": "apiKey"
+      }
+    },
+    {
+      "id": 45,
+      "mapper": {
+        "key": "{{10.phone}}",
+        "data": {
+          "flags": "{{ifempty(if(substring(15.flags; 0; 3) = \"/**\"; \"\"; 15.flags); 13.flags)}}",
+          "fields": {
+            "fname": "{{ifempty(if(substring(15.fname; 0; 3) = \"/**\"; \"\"; 15.fname); 13.fields.fname)}}",
+            "lname": "{{ifempty(if(substring(15.lname; 0; 3) = \"/**\"; \"\"; 15.lname); 13.fields.lname)}}",
+            "males": "{{max(ifempty(15.guys; 13.fields.males); 0)}}",
+            "females": "{{max(ifempty(15.girls; 13.fields.females); 0)}}",
+            "event_date": "{{ifempty(if(substring(15.event_date; 0; 3) = \"/**\"; \"\"; 15.event_date); 13.fields.event_date)}}",
+            "venue_name": "{{ifempty(if(substring(15.venue; 0; 3) = \"/**\"; \"\"; 15.venue); 13.fields.venue_name)}}",
+            "event_requested": "{{ifempty(if(substring(15.event_request; 0; 3) = \"/**\"; \"\"; 15.event_request); 13.fields.event_requested)}}",
+            "referral_source": "{{ifempty(if(substring(15.referral; 0; 3) = \"/**\"; \"\"; 15.referral); 13.fields.referral_source)}}",
+            "event_found_date": "{{13.fields.event_found_date}}",
+            "instagram_handle": "{{ifempty(if(substring(15.instagram; 0; 3) = \"/**\"; \"\"; 15.instagram); 13.fields.instagram_handle)}}",
+            "event_found_venue": "{{13.fields.event_found_venue}}",
+            "event_found_performer": "{{13.fields.event_found_performer}}"
+          },
+          "missing": "{{13.missing}}",
+          "category": "{{ifempty(if(substring(15.category; 0; 3) = \"/**\"; \"\"; 15.category); 13.category)}}",
+          "priority": "{{ifempty(if(substring(15.priority; 0; 3) = \"/**\"; \"\"; 15.priority); 13.priority)}}",
+          "warm_handoff": "{{13.warm_handoff}}",
+          "first message": "{{13.`first message`}}",
+          "last_inbound_reply": "{{10.message}}",
+          "last_outbound_draft": "{{2.response}}",
+          "aitable_event_record_id": "{{13.aitable_event_record_id}}",
+          "aitable_guest_record_id": "{{13.aitable_guest_record_id}}"
+        },
+        "upsert": true,
+        "overwriteArrays": false
+      },
+      "module": "datastore:UpdateRecord",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "key",
+            "type": "text",
+            "label": "Key",
+            "required": true
+          },
+          {
+            "name": "upsert",
+            "type": "boolean",
+            "label": "Insert missing record",
+            "required": true
+          },
+          {
+            "name": "overwriteArrays",
+            "type": "boolean",
+            "label": "Overwrite an existing array in the record",
+            "required": true
+          },
+          {
+            "name": "data",
+            "spec": [
+              {
+                "name": "fields",
+                "spec": [
+                  {
+                    "name": "fname",
+                    "type": "text",
+                    "label": "Fname"
+                  },
+                  {
+                    "name": "lname",
+                    "type": "text",
+                    "label": "Lname"
+                  },
+                  {
+                    "name": "females",
+                    "type": "number",
+                    "label": "Females"
+                  },
+                  {
+                    "name": "males",
+                    "type": "text",
+                    "label": "Males"
+                  },
+                  {
+                    "name": "venue_name",
+                    "type": "text",
+                    "label": "Venue name"
+                  },
+                  {
+                    "name": "event_requested",
+                    "type": "text",
+                    "label": "Event requested"
+                  },
+                  {
+                    "name": "event_date",
+                    "type": "text",
+                    "label": "Event date"
+                  },
+                  {
+                    "name": "referral_source",
+                    "type": "text",
+                    "label": "Referral source"
+                  },
+                  {
+                    "name": "instagram_handle",
+                    "type": "text",
+                    "label": "Instagram handle"
+                  },
+                  {
+                    "name": "event_found_performer",
+                    "type": "text",
+                    "label": "Event Found Performer"
+                  },
+                  {
+                    "name": "event_found_venue",
+                    "type": "text",
+                    "label": "Event Found Venue"
+                  },
+                  {
+                    "name": "event_found_date",
+                    "type": "text",
+                    "label": "Event Found Date"
+                  }
+                ],
+                "type": "collection",
+                "label": "Fields"
+              },
+              {
+                "name": "warm_handoff",
+                "type": "text",
+                "label": "Warm handoff"
+              },
+              {
+                "name": "missing",
+                "spec": {
+                  "name": "value",
+                  "type": "text"
+                },
+                "type": "array",
+                "label": "Missing"
+              },
+              {
+                "name": "aitable_guest_record_id",
+                "type": "text",
+                "label": "AITable Guest Record ID"
+              },
+              {
+                "name": "aitable_event_record_id",
+                "type": "text",
+                "label": "AITable Event Record ID"
+              },
+              {
+                "name": "last_outbound_draft",
+                "type": "text",
+                "label": "Last Outbound Draft"
+              },
+              {
+                "name": "last_inbound_reply",
+                "type": "text",
+                "label": "Last Inbound Reply"
+              },
+              {
+                "name": "imessage_capable",
+                "type": "boolean",
+                "label": "iMessage Capable"
+              },
+              {
+                "name": "rcs_capable",
+                "type": "boolean",
+                "label": "RCS Capable"
+              },
+              {
+                "name": "sms_capable",
+                "type": "boolean",
+                "label": "SMS Capable"
+              },
+              {
+                "name": "first message",
+                "type": "text",
+                "label": null
+              },
+              {
+                "name": "flags",
+                "type": "text",
+                "label": "Flags"
+              },
+              {
+                "name": "priority",
+                "type": "text",
+                "label": "Priority"
+              },
+              {
+                "name": "category",
+                "type": "text",
+                "label": "Category"
+              }
+            ],
+            "type": "collection",
+            "label": "Record"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "data": {
+              "nested": {
+                "missing": {
+                  "mode": "edit"
+                },
+                "rcs_capable": {
+                  "mode": "chose"
+                },
+                "sms_capable": {
+                  "mode": "chose"
+                },
+                "imessage_capable": {
+                  "mode": "chose"
+                }
+              }
+            },
+            "upsert": {
+              "mode": "chose"
+            },
+            "overwriteArrays": {
+              "mode": "chose"
+            }
+          },
+          "parameters": {
+            "datastore": {
+              "label": "Vinny - Incoming Guestlist"
+            }
+          }
+        },
+        "designer": {
+          "x": 1800,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "datastore",
+            "type": "datastore",
+            "label": "Data store",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "datastore": 83707
+      }
+    },
+    {
+      "id": 46,
+      "mapper": {
+        "draft_message": "{{44.fields.`Draft Message`}}",
+        "draft_message_id": "{{44.fields.recordID}}"
+      },
+      "module": "scenario-service:ReturnData",
+      "version": 2,
+      "metadata": {
+        "expect": [
+          {
+            "name": "draft_message",
+            "type": "text",
+            "label": ""
+          },
+          {
+            "name": "event_requested",
+            "type": "text",
+            "label": ""
+          },
+          {
+            "name": "event_date",
+            "type": "text",
+            "label": ""
+          },
+          {
+            "name": "Venue",
+            "type": "text",
+            "label": ""
+          },
+          {
+            "name": "draft_message_id",
+            "type": "text",
+            "label": ""
+          }
+        ],
+        "restore": {},
+        "designer": {
+          "x": 2100,
+          "y": 0
+        }
+      },
+      "parameters": {}
+    }
+  ],
+  "name": "Adriana AI Agent - Event Search + First Draft Message",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "2": {
+          "metadata": {
+            "executionSteps": [
+              {
+                "id": "msg_0e0cd0dd5fe1c3660169dd9d5ac09c8199b9cc184479f3b1f4",
+                "role": "assistant",
+                "content": "Hey — Chase asked me to help. Are you still 2 girls and 2 guys? What’s your first and last name to m...",
+                "createdAt": {},
+                "reasoning": "**Finalizing entry request**\n\nI need to send a concise message asking for the user's first and last ...",
+                "toolCalls": [
+                  {
+                    "id": "call_EVXUc5qOx5gkFyyPAmPc98gV",
+                    "name": "2b_event_search_1",
+                    "toolType": "scenario",
+                    "arguments": {
+                      "module_34_data_phone": "+17202556049",
+                      "module_34_data_performer": null,
+                      "module_34_data_raw_query": "Last minute question for tonight, are there any clubs that are still guest listing people? 2 girls 2...",
+                      "module_34_data_today_date": "2026-04-11"
+                    }
+                  }
+                ],
+                "tokenUsage": {
+                  "totalTokens": 3099,
+                  "promptTokens": 2822,
+                  "completionTokens": 277
+                },
+                "toolResponse": {
+                  "id": "call_EVXUc5qOx5gkFyyPAmPc98gV",
+                  "result": "{\"event_results\":\"Here is the best matching event for your guest listing request:\\n\\n**Cloonee at LI...",
+                  "toolType": "scenario"
+                },
+                "executionTimeMs": 3776,
+                "agentIterationId": "c1586713-ba36-4553-bf35-d3343ab5e83d"
+              }
+            ],
+            "executionTimeMs": 3818,
+            "tokenUsageSummary": {
+              "totalTokens": 3099,
+              "promptTokens": 2822,
+              "completionTokens": 277
+            },
+            "lastAgentIterationId": "c1586713-ba36-4553-bf35-d3343ab5e83d"
+          },
+          "response": "Hey — Chase asked me to help. Are you still 2 girls and 2 guys? What’s your first and last name to m...",
+          "threadId": "rec606OB6OuDe"
+        },
+        "10": {
+          "phone": "+17202556049",
+          "venue": "",
+          "message": "Last minute question for tonight, are there any clubs that are still guest listing people? 2 girls 2...",
+          "event_date": "",
+          "event_requested": ""
+        },
+        "13": {
+          "fields": {
+            "males": "2",
+            "females": 2,
+            "event_found_date": "2026-04-11",
+            "event_found_venue": "LIV Las Vegas",
+            "event_found_performer": "Cloonee"
+          },
+          "missing": [],
+          "first message": "Last minute question for tonight, are there any clubs that are still guest listing people? 2 girls 2...",
+          "last_inbound_reply": "Last minute question for tonight, are there any clubs that are still guest listing people? 2 girls 2...",
+          "last_outbound_draft": "Can I get your first and last name to match your ID? I’ll check guest-list availability for tonight ...",
+          "aitable_guest_record_id": "rec606OB6OuDe"
+        },
+        "15": {
+          "guys": 2,
+          "fname": "",
+          "girls": 2,
+          "lname": "",
+          "venue": "",
+          "referral": "",
+          "instagram": "",
+          "event_date": "",
+          "event_request": ""
+        },
+        "44": {
+          "fields": {
+            "Phone": "+17202556049",
+            "Status": "draft",
+            "Updated": 1776131419601,
+            "recordID": "recmk1CTkGtbn",
+            "Direction": "📬 outbound",
+            "Draft Message": "Hey — Chase asked me to help. Are you still 2 girls and 2 guys? What’s your first and last name to m..."
+          },
+          "recordId": "recmk1CTkGtbn",
+          "createdAt": null,
+          "updatedAt": null
+        },
+        "45": {
+          "key": "+17202556049"
+        },
+        "46": {
+          "draft_message": "Hey — Chase asked me to help. Are you still 2 girls and 2 guys? What’s your first and last name to m...",
+          "draft_message_id": "recmk1CTkGtbn"
+        },
+        "53": {
+          "data": {
+            "code": 200,
+            "data": {
+              "records": [
+                {
+                  "fields": {
+                    "Guest": [
+                      "rec606OB6OuDe"
+                    ],
+                    "Phone": "+17202556049",
+                    "Status": "draft",
+                    "Updated": 1776131420055,
+                    "recordID": "recmk1CTkGtbn",
+                    "Direction": "📬 outbound",
+                    "Draft Message": "Hey — Chase asked me to help. Are you still 2 girls and 2 guys? What’s your first and last name to m..."
+                  },
+                  "recordId": "recmk1CTkGtbn",
+                  "createdAt": 1776131419000,
+                  "updatedAt": 1776131419000
+                }
+              ]
+            },
+            "message": "SUCCESS",
+            "success": true
+          },
+          "headers": {
+            "date": "Tue, 14 Apr 2026 01:50:20 GMT",
+            "server": "openresty",
+            "expect-ct": "max-age=0",
+            "request-id": "JFM2Ph5yklbgQzNg6ef8",
+            "content-type": "application/json; charset=utf-8",
+            "cache-control": "no-cache,no-store,must-revalidate",
+            "server-timing": "total;dur=204",
+            "content-length": "552",
+            "referrer-policy": "no-referrer",
+            "x-frame-options": "SAMEORIGIN",
+            "x-xss-protection": "0",
+            "x-download-options": "noopen",
+            "x-content-type-options": "nosniff",
+            "x-dns-prefetch-control": "off",
+            "content-security-policy": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancest...",
+            "strict-transport-security": "max-age=15552000; includeSubDomains",
+            "access-control-allow-origin": "*",
+            "access-control-allow-headers": "Authorization,DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Cont...",
+            "access-control-allow-methods": "GET, POST, OPTIONS, DELETE, PATCH",
+            "access-control-allow-credentials": "true",
+            "x-permitted-cross-domain-policies": "none"
+          },
+          "statusCode": 200
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}

@@ -1,0 +1,2013 @@
+{
+  "flow": [
+    {
+      "id": 1,
+      "mapper": {},
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "parameters": {
+            "hook": {
+              "data": {
+                "editable": "true"
+              },
+              "label": "Vinny Orchestrator"
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 600
+        },
+        "parameters": [
+          {
+            "name": "hook",
+            "type": "hook:gateway-webhook",
+            "label": "Webhook",
+            "required": true
+          },
+          {
+            "name": "maxResults",
+            "type": "number",
+            "label": "Maximum number of results"
+          }
+        ]
+      },
+      "parameters": {
+        "hook": 2671188,
+        "maxResults": 1
+      }
+    },
+    {
+      "id": 392,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "phone",
+            "value": "{{1.phone}}"
+          },
+          {
+            "name": "message",
+            "value": "{{1.message}}"
+          },
+          {
+            "name": "source",
+            "value": "{{1.source}}"
+          }
+        ]
+      },
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
+            "type": "select",
+            "label": "Variable lifetime",
+            "required": true,
+            "validate": {
+              "enum": [
+                "roundtrip",
+                "execution"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            },
+            "variables": {
+              "items": [
+                null,
+                null,
+                null
+              ]
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 600
+        },
+        "interface": [
+          {
+            "name": "phone",
+            "type": "any",
+            "label": "phone"
+          },
+          {
+            "name": "message",
+            "type": "any",
+            "label": "message"
+          }
+        ]
+      },
+      "parameters": {}
+    },
+    {
+      "id": 19,
+      "mapper": {
+        "key": "{{392.phone}}"
+      },
+      "module": "datastore:ExistRecord",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "key",
+            "type": "text",
+            "label": "Key",
+            "required": true
+          }
+        ],
+        "restore": {
+          "parameters": {
+            "datastore": {
+              "label": "Vinny - Incoming Guestlist"
+            }
+          }
+        },
+        "designer": {
+          "x": 600,
+          "y": 600
+        },
+        "parameters": [
+          {
+            "name": "datastore",
+            "type": "datastore",
+            "label": "Data store",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "datastore": 83707
+      }
+    },
+    {
+      "id": 401,
+      "mapper": {
+        "key": "{{392.phone}}",
+        "returnWrapped": false
+      },
+      "module": "datastore:GetRecord",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "key",
+            "type": "text",
+            "label": "Key",
+            "required": true
+          },
+          {
+            "name": "returnWrapped",
+            "type": "boolean",
+            "label": "Return Wrapped Output",
+            "required": true
+          }
+        ],
+        "restore": {
+          "parameters": {
+            "datastore": {
+              "label": "Vinny - Incoming Guestlist"
+            }
+          }
+        },
+        "designer": {
+          "x": 900,
+          "y": 600
+        },
+        "interface": [
+          {
+            "help": "",
+            "name": "fields",
+            "spec": [
+              {
+                "help": "",
+                "name": "fname",
+                "type": "text",
+                "label": "Fname",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "help": "",
+                "name": "lname",
+                "type": "text",
+                "label": "Lname",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "help": "",
+                "name": "females",
+                "type": "number",
+                "label": "Females",
+                "default": null,
+                "required": false
+              },
+              {
+                "help": "",
+                "name": "males",
+                "type": "text",
+                "label": "Males",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "help": "",
+                "name": "venue_name",
+                "type": "text",
+                "label": "Venue name",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "help": "",
+                "name": "event_requested",
+                "type": "text",
+                "label": "Event requested",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "help": "",
+                "name": "event_date",
+                "type": "text",
+                "label": "Event date",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "help": "",
+                "name": "referral_source",
+                "type": "text",
+                "label": "Referral source",
+                "default": null,
+                "required": false,
+                "multiline": false
+              },
+              {
+                "help": "",
+                "name": "instagram_handle",
+                "type": "text",
+                "label": "Instagram handle",
+                "default": null,
+                "required": false,
+                "multiline": false
+              }
+            ],
+            "type": "collection",
+            "label": "Fields",
+            "required": false
+          },
+          {
+            "help": "",
+            "name": "warm_handoff",
+            "type": "text",
+            "label": "Warm handoff",
+            "default": null,
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "",
+            "name": "missing",
+            "spec": {
+              "type": "text",
+              "default": null,
+              "required": false,
+              "multiline": false
+            },
+            "type": "array",
+            "label": "Missing",
+            "required": false
+          },
+          {
+            "help": "",
+            "name": "aitable_guest_record_id",
+            "type": "text",
+            "label": "AITable Guest Record ID",
+            "default": null,
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "",
+            "name": "aitable_event_record_id",
+            "type": "text",
+            "label": "AITable Event Record ID",
+            "default": null,
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "",
+            "name": "last_outbound_draft",
+            "type": "text",
+            "label": "Last Outbound Draft",
+            "default": null,
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "",
+            "name": "last_inbound_reply",
+            "type": "text",
+            "label": "Last Inbound Reply",
+            "default": null,
+            "required": false,
+            "multiline": false
+          },
+          {
+            "help": "",
+            "name": "imessage_capable",
+            "type": "boolean",
+            "label": "iMessage Capable",
+            "required": false
+          },
+          {
+            "help": "",
+            "name": "rcs_capable",
+            "type": "boolean",
+            "label": "RCS Capable",
+            "required": false
+          },
+          {
+            "help": "",
+            "name": "sms_capable",
+            "type": "boolean",
+            "label": "SMS Capable",
+            "required": false
+          },
+          {
+            "help": "",
+            "name": "first message",
+            "type": "text",
+            "label": null,
+            "default": null,
+            "required": false,
+            "multiline": false
+          },
+          {
+            "name": "flags",
+            "type": "text",
+            "label": "Flags"
+          },
+          {
+            "name": "priority",
+            "type": "text",
+            "label": "Priority"
+          },
+          {
+            "name": "category",
+            "type": "text",
+            "label": "Category"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "datastore",
+            "type": "datastore",
+            "label": "Data store",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "datastore": 83707
+      }
+    },
+    {
+      "id": 380,
+      "mapper": null,
+      "module": "builtin:BasicRouter",
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 10,
+              "filter": {
+                "name": "New Lead",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{19.exist}}",
+                      "b": "true",
+                      "o": "text:notequal"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "key": "{{392.phone}}",
+                "data": {
+                  "flags": "",
+                  "fields": {
+                    "fname": "",
+                    "lname": "",
+                    "males": "",
+                    "females": "",
+                    "event_date": "",
+                    "venue_name": "",
+                    "event_requested": "",
+                    "referral_source": "",
+                    "instagram_handle": ""
+                  },
+                  "missing": [],
+                  "category": "",
+                  "priority": "",
+                  "warm_handoff": "",
+                  "first message": "{{392.message}}",
+                  "last_inbound_reply": "",
+                  "last_outbound_draft": "",
+                  "aitable_event_record_id": "",
+                  "aitable_guest_record_id": ""
+                },
+                "overwrite": false
+              },
+              "module": "datastore:AddRecord",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "key",
+                    "type": "text",
+                    "label": "Key"
+                  },
+                  {
+                    "name": "overwrite",
+                    "type": "boolean",
+                    "label": "Overwrite an existing record",
+                    "required": true
+                  },
+                  {
+                    "name": "data",
+                    "spec": [
+                      {
+                        "name": "fields",
+                        "spec": [
+                          {
+                            "name": "fname",
+                            "type": "text",
+                            "label": "Fname"
+                          },
+                          {
+                            "name": "lname",
+                            "type": "text",
+                            "label": "Lname"
+                          },
+                          {
+                            "name": "females",
+                            "type": "number",
+                            "label": "Females"
+                          },
+                          {
+                            "name": "males",
+                            "type": "text",
+                            "label": "Males"
+                          },
+                          {
+                            "name": "venue_name",
+                            "type": "text",
+                            "label": "Venue name"
+                          },
+                          {
+                            "name": "event_requested",
+                            "type": "text",
+                            "label": "Event requested"
+                          },
+                          {
+                            "name": "event_date",
+                            "type": "text",
+                            "label": "Event date"
+                          },
+                          {
+                            "name": "referral_source",
+                            "type": "text",
+                            "label": "Referral source"
+                          },
+                          {
+                            "name": "instagram_handle",
+                            "type": "text",
+                            "label": "Instagram handle"
+                          }
+                        ],
+                        "type": "collection",
+                        "label": "Fields"
+                      },
+                      {
+                        "name": "warm_handoff",
+                        "type": "text",
+                        "label": "Warm handoff"
+                      },
+                      {
+                        "name": "missing",
+                        "spec": {
+                          "name": "value",
+                          "type": "text"
+                        },
+                        "type": "array",
+                        "label": "Missing"
+                      },
+                      {
+                        "name": "aitable_guest_record_id",
+                        "type": "text",
+                        "label": "AITable Guest Record ID"
+                      },
+                      {
+                        "name": "aitable_event_record_id",
+                        "type": "text",
+                        "label": "AITable Event Record ID"
+                      },
+                      {
+                        "name": "last_outbound_draft",
+                        "type": "text",
+                        "label": "Last Outbound Draft"
+                      },
+                      {
+                        "name": "last_inbound_reply",
+                        "type": "text",
+                        "label": "Last Inbound Reply"
+                      },
+                      {
+                        "name": "imessage_capable",
+                        "type": "boolean",
+                        "label": "iMessage Capable"
+                      },
+                      {
+                        "name": "rcs_capable",
+                        "type": "boolean",
+                        "label": "RCS Capable"
+                      },
+                      {
+                        "name": "sms_capable",
+                        "type": "boolean",
+                        "label": "SMS Capable"
+                      },
+                      {
+                        "name": "first message",
+                        "type": "text",
+                        "label": null
+                      },
+                      {
+                        "name": "flags",
+                        "type": "text",
+                        "label": "Flags"
+                      },
+                      {
+                        "name": "priority",
+                        "type": "text",
+                        "label": "Priority"
+                      },
+                      {
+                        "name": "category",
+                        "type": "text",
+                        "label": "Category"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Record"
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "data": {
+                      "nested": {
+                        "missing": {
+                          "mode": "chose"
+                        },
+                        "rcs_capable": {
+                          "mode": "chose"
+                        },
+                        "sms_capable": {
+                          "mode": "chose"
+                        },
+                        "imessage_capable": {
+                          "mode": "chose"
+                        }
+                      }
+                    },
+                    "overwrite": {
+                      "mode": "chose"
+                    }
+                  },
+                  "parameters": {
+                    "datastore": {
+                      "label": "Vinny - Incoming Guestlist"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 1500,
+                  "y": 0
+                },
+                "parameters": [
+                  {
+                    "name": "datastore",
+                    "type": "datastore",
+                    "label": "Data store",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "datastore": 83707
+              }
+            },
+            {
+              "id": 108,
+              "filter": {
+                "name": "No existing Guest record",
+                "conditions": []
+              },
+              "mapper": {
+                "fields": {
+                  "Phone": "{{392.phone}}",
+                  "Status": "pending",
+                  "Initial Message": "{{392.message}}"
+                },
+                "spaceId": "spcGaCMuSZBA3",
+                "fieldKey": "name",
+                "datasheetId": "dst04qbY4KfvncxzDX"
+              },
+              "module": "apitable:createRecords",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "spaceId",
+                    "type": "select",
+                    "label": "Space",
+                    "required": true
+                  },
+                  {
+                    "name": "datasheetId",
+                    "type": "select",
+                    "label": "Datasheet",
+                    "required": true
+                  },
+                  {
+                    "name": "viewId",
+                    "type": "select",
+                    "label": "View"
+                  },
+                  {
+                    "name": "fieldKey",
+                    "type": "select",
+                    "label": "Field Key",
+                    "validate": {
+                      "enum": [
+                        "name",
+                        "id"
+                      ]
+                    }
+                  },
+                  {
+                    "name": "fields",
+                    "spec": [
+                      {
+                        "name": "First Name",
+                        "type": "text"
+                      },
+                      {
+                        "name": "Last Name",
+                        "type": "text"
+                      },
+                      {
+                        "name": "Phone",
+                        "type": "text"
+                      },
+                      {
+                        "name": "Status",
+                        "type": "select",
+                        "validate": {
+                          "enum": [
+                            "pending",
+                            "confirmed",
+                            "cancelled"
+                          ]
+                        }
+                      },
+                      {
+                        "name": "Females",
+                        "type": "number"
+                      },
+                      {
+                        "name": "Males",
+                        "type": "number"
+                      },
+                      {
+                        "name": "Initial Message",
+                        "type": "text"
+                      },
+                      {
+                        "name": "Venue",
+                        "type": "text"
+                      },
+                      {
+                        "name": "UrVenue Submission Status",
+                        "type": "select",
+                        "validate": {
+                          "enum": [
+                            "submitted",
+                            "failed"
+                          ]
+                        }
+                      },
+                      {
+                        "name": "Referral",
+                        "type": "text"
+                      },
+                      {
+                        "name": "Instagram",
+                        "type": "text"
+                      },
+                      {
+                        "name": "InviteID",
+                        "type": "text"
+                      },
+                      {
+                        "name": "Name Confirmed",
+                        "type": "boolean"
+                      },
+                      {
+                        "name": "Party Size Confirmed",
+                        "type": "boolean"
+                      },
+                      {
+                        "name": "Event Confirmed",
+                        "type": "boolean"
+                      },
+                      {
+                        "name": "Flags",
+                        "type": "text"
+                      },
+                      {
+                        "name": "Priority",
+                        "type": "select",
+                        "validate": {
+                          "enum": [
+                            "normal",
+                            "high",
+                            "urgent"
+                          ]
+                        }
+                      },
+                      {
+                        "name": "Category",
+                        "type": "select",
+                        "validate": {
+                          "enum": [
+                            "standard",
+                            "schedule-inquiry",
+                            "all-male",
+                            "all-female",
+                            "bachelorette",
+                            "bottle-service",
+                            "large-group",
+                            "multi-night",
+                            "referral",
+                            "vip"
+                          ]
+                        }
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Fields"
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "fields": {
+                      "nested": {
+                        "Status": {
+                          "mode": "chose",
+                          "label": "pending"
+                        },
+                        "Category": {
+                          "mode": "chose",
+                          "label": "Empty"
+                        },
+                        "Priority": {
+                          "mode": "chose",
+                          "label": "Empty"
+                        },
+                        "Name Confirmed": {
+                          "mode": "chose"
+                        },
+                        "Event Confirmed": {
+                          "mode": "chose"
+                        },
+                        "Party Size Confirmed": {
+                          "mode": "chose"
+                        },
+                        "UrVenue Submission Status": {
+                          "mode": "chose",
+                          "label": "Empty"
+                        }
+                      }
+                    },
+                    "viewId": {
+                      "mode": "chose"
+                    },
+                    "spaceId": {
+                      "mode": "chose",
+                      "label": "XCTV"
+                    },
+                    "fieldKey": {
+                      "mode": "chose",
+                      "label": "Name"
+                    },
+                    "datasheetId": {
+                      "mode": "chose",
+                      "label": "Guests"
+                    }
+                  },
+                  "parameters": {
+                    "__IMTCONN__": {
+                      "data": {
+                        "scoped": "true",
+                        "connection": "apitable"
+                      },
+                      "label": "AITable"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 1800,
+                  "y": 0,
+                  "name": "Add Guest to Pipeline"
+                },
+                "parameters": [
+                  {
+                    "name": "__IMTCONN__",
+                    "type": "account:apitable",
+                    "label": "Connection",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "__IMTCONN__": 3371846
+              }
+            },
+            {
+              "id": 370,
+              "mapper": {
+                "key": "{{392.phone}}",
+                "data": {
+                  "flags": "",
+                  "fields": {
+                    "fname": "",
+                    "lname": "",
+                    "males": "",
+                    "females": "",
+                    "event_date": "",
+                    "venue_name": "",
+                    "event_requested": "",
+                    "referral_source": "",
+                    "instagram_handle": ""
+                  },
+                  "missing": [],
+                  "category": "",
+                  "priority": "",
+                  "warm_handoff": "",
+                  "first message": "{{392.message}}",
+                  "last_inbound_reply": "",
+                  "last_outbound_draft": "",
+                  "aitable_event_record_id": "",
+                  "aitable_guest_record_id": "{{108.recordId}}"
+                },
+                "upsert": true,
+                "overwriteArrays": false
+              },
+              "module": "datastore:UpdateRecord",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "key",
+                    "type": "text",
+                    "label": "Key",
+                    "required": true
+                  },
+                  {
+                    "name": "upsert",
+                    "type": "boolean",
+                    "label": "Insert missing record",
+                    "required": true
+                  },
+                  {
+                    "name": "overwriteArrays",
+                    "type": "boolean",
+                    "label": "Overwrite an existing array in the record",
+                    "required": true
+                  },
+                  {
+                    "name": "data",
+                    "spec": [
+                      {
+                        "name": "fields",
+                        "spec": [
+                          {
+                            "name": "fname",
+                            "type": "text",
+                            "label": "Fname"
+                          },
+                          {
+                            "name": "lname",
+                            "type": "text",
+                            "label": "Lname"
+                          },
+                          {
+                            "name": "females",
+                            "type": "number",
+                            "label": "Females"
+                          },
+                          {
+                            "name": "males",
+                            "type": "text",
+                            "label": "Males"
+                          },
+                          {
+                            "name": "venue_name",
+                            "type": "text",
+                            "label": "Venue name"
+                          },
+                          {
+                            "name": "event_requested",
+                            "type": "text",
+                            "label": "Event requested"
+                          },
+                          {
+                            "name": "event_date",
+                            "type": "text",
+                            "label": "Event date"
+                          },
+                          {
+                            "name": "referral_source",
+                            "type": "text",
+                            "label": "Referral source"
+                          },
+                          {
+                            "name": "instagram_handle",
+                            "type": "text",
+                            "label": "Instagram handle"
+                          }
+                        ],
+                        "type": "collection",
+                        "label": "Fields"
+                      },
+                      {
+                        "name": "warm_handoff",
+                        "type": "text",
+                        "label": "Warm handoff"
+                      },
+                      {
+                        "name": "missing",
+                        "spec": {
+                          "name": "value",
+                          "type": "text"
+                        },
+                        "type": "array",
+                        "label": "Missing"
+                      },
+                      {
+                        "name": "aitable_guest_record_id",
+                        "type": "text",
+                        "label": "AITable Guest Record ID"
+                      },
+                      {
+                        "name": "aitable_event_record_id",
+                        "type": "text",
+                        "label": "AITable Event Record ID"
+                      },
+                      {
+                        "name": "last_outbound_draft",
+                        "type": "text",
+                        "label": "Last Outbound Draft"
+                      },
+                      {
+                        "name": "last_inbound_reply",
+                        "type": "text",
+                        "label": "Last Inbound Reply"
+                      },
+                      {
+                        "name": "imessage_capable",
+                        "type": "boolean",
+                        "label": "iMessage Capable"
+                      },
+                      {
+                        "name": "rcs_capable",
+                        "type": "boolean",
+                        "label": "RCS Capable"
+                      },
+                      {
+                        "name": "sms_capable",
+                        "type": "boolean",
+                        "label": "SMS Capable"
+                      },
+                      {
+                        "name": "first message",
+                        "type": "text",
+                        "label": null
+                      },
+                      {
+                        "name": "flags",
+                        "type": "text",
+                        "label": "Flags"
+                      },
+                      {
+                        "name": "priority",
+                        "type": "text",
+                        "label": "Priority"
+                      },
+                      {
+                        "name": "category",
+                        "type": "text",
+                        "label": "Category"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Record"
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "data": {
+                      "nested": {
+                        "missing": {
+                          "mode": "chose"
+                        },
+                        "rcs_capable": {
+                          "mode": "chose"
+                        },
+                        "sms_capable": {
+                          "mode": "chose"
+                        },
+                        "imessage_capable": {
+                          "mode": "chose"
+                        }
+                      }
+                    },
+                    "upsert": {
+                      "mode": "chose"
+                    },
+                    "overwriteArrays": {
+                      "mode": "chose"
+                    }
+                  },
+                  "parameters": {
+                    "datastore": {
+                      "label": "Vinny - Incoming Guestlist"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 2100,
+                  "y": 0
+                },
+                "parameters": [
+                  {
+                    "name": "datastore",
+                    "type": "datastore",
+                    "label": "Data store",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "datastore": 83707
+              }
+            },
+            {
+              "id": 500,
+              "mapper": {
+                "data": {
+                  "phone": "{{392.phone}}",
+                  "message": "{{392.message}}"
+                }
+              },
+              "module": "scenario-service:CallSubscenario",
+              "version": 2,
+              "metadata": {
+                "designer": {
+                  "x": 2400,
+                  "y": 0,
+                  "name": "2A: Extract & Update Guest"
+                },
+                "interface": [
+                  {
+                    "help": "",
+                    "name": "fname",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "lname",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "girls",
+                    "type": "number",
+                    "label": "",
+                    "default": "",
+                    "required": false
+                  },
+                  {
+                    "help": "",
+                    "name": "guys",
+                    "type": "number",
+                    "label": "",
+                    "default": "",
+                    "required": false
+                  },
+                  {
+                    "help": "",
+                    "name": "venue",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "event_request",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "event_date",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "referral",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "instagram",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "scenario",
+                    "type": "scenario",
+                    "label": "Scenario",
+                    "required": true
+                  },
+                  {
+                    "name": "shouldWaitForExecutionEnd",
+                    "type": "boolean",
+                    "label": "Wait for the scenario to finish",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "scenario": "SCN_4654317",
+                "shouldWaitForExecutionEnd": true
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 461,
+              "mapper": {
+                "data": {
+                  "phone": "{{392.phone}}",
+                  "message": "{{392.message}}"
+                }
+              },
+              "module": "scenario-service:CallSubscenario",
+              "version": 2,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "data",
+                    "spec": [
+                      {
+                        "name": "phone",
+                        "type": "text",
+                        "label": "",
+                        "required": true
+                      },
+                      {
+                        "name": "message",
+                        "type": "text",
+                        "label": "",
+                        "required": true
+                      },
+                      {
+                        "name": "event_requested",
+                        "type": "text",
+                        "label": ""
+                      },
+                      {
+                        "name": "event_date",
+                        "type": "text",
+                        "label": ""
+                      },
+                      {
+                        "name": "venue",
+                        "type": "text",
+                        "label": ""
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Scenario Inputs"
+                  }
+                ],
+                "restore": {
+                  "parameters": {
+                    "scenario": {
+                      "label": "Adriana AI Agent - Event Search + First Draft Message"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 1500,
+                  "y": 900,
+                  "name": "Run Adriana"
+                },
+                "interface": [
+                  {
+                    "help": "",
+                    "name": "draft_message",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "Name of event, artist, DJ, performer, etc.",
+                    "name": "event_requested",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "Date of event",
+                    "name": "event_date",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "Venue",
+                    "name": "Venue",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "draft_message_id",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "scenario",
+                    "type": "scenario",
+                    "label": "Scenario",
+                    "required": true
+                  },
+                  {
+                    "name": "shouldWaitForExecutionEnd",
+                    "type": "boolean",
+                    "label": "Wait for the scenario to finish",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "scenario": "SCN_4653751",
+                "shouldWaitForExecutionEnd": true
+              }
+            },
+            {
+              "id": 501,
+              "mapper": {
+                "key": "{{392.phone}}",
+                "returnWrapped": false
+              },
+              "module": "datastore:GetRecord",
+              "version": 1,
+              "metadata": {
+                "designer": {
+                  "x": 1800,
+                  "y": 900,
+                  "name": "DS: Get Guest Record ID"
+                },
+                "parameters": [
+                  {
+                    "name": "datastore",
+                    "type": "datastore",
+                    "label": "Data store",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "datastore": 83707
+              }
+            },
+            {
+              "id": 502,
+              "filter": {
+                "name": "Guest record exists",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{501.aitable_guest_record_id}}",
+                      "o": "exist"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "data": {
+                  "phone": "{{392.phone}}",
+                  "message": "{{392.message}}"
+                }
+              },
+              "module": "scenario-service:CallSubscenario",
+              "version": 2,
+              "metadata": {
+                "designer": {
+                  "x": 2170,
+                  "y": 887,
+                  "name": "2A: Extract & Update Guest"
+                },
+                "interface": [
+                  {
+                    "help": "",
+                    "name": "fname",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "lname",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "girls",
+                    "type": "number",
+                    "label": "",
+                    "default": "",
+                    "required": false
+                  },
+                  {
+                    "help": "",
+                    "name": "guys",
+                    "type": "number",
+                    "label": "",
+                    "default": "",
+                    "required": false
+                  },
+                  {
+                    "help": "",
+                    "name": "venue",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "event_request",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "event_date",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "referral",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  },
+                  {
+                    "help": "",
+                    "name": "instagram",
+                    "type": "text",
+                    "label": "",
+                    "default": "",
+                    "required": false,
+                    "multiline": false
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "scenario",
+                    "type": "scenario",
+                    "label": "Scenario",
+                    "required": true
+                  },
+                  {
+                    "name": "shouldWaitForExecutionEnd",
+                    "type": "boolean",
+                    "label": "Wait for the scenario to finish",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "scenario": "SCN_4654317",
+                "shouldWaitForExecutionEnd": true
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 457,
+              "filter": {
+                "name": "iOS Shortcut Only",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{392.source}}",
+                      "b": "shortcut",
+                      "o": "text:equal"
+                    }
+                  ]
+                ]
+              },
+              "mapper": null,
+              "module": "builtin:BasicRouter",
+              "routes": [
+                {
+                  "flow": [
+                    {
+                      "id": 460,
+                      "mapper": {
+                        "data": {
+                          "phone": "{{392.phone}}",
+                          "message": "{{392.message}}"
+                        }
+                      },
+                      "module": "scenario-service:CallSubscenario",
+                      "version": 2,
+                      "metadata": {
+                        "expect": [
+                          {
+                            "name": "data",
+                            "spec": [
+                              {
+                                "name": "phone",
+                                "type": "text",
+                                "label": "",
+                                "required": true
+                              },
+                              {
+                                "name": "message",
+                                "type": "text",
+                                "label": "",
+                                "required": true
+                              }
+                            ],
+                            "type": "collection",
+                            "label": "Scenario Inputs"
+                          }
+                        ],
+                        "restore": {
+                          "parameters": {
+                            "scenario": {
+                              "label": "Guest Message Received"
+                            }
+                          }
+                        },
+                        "designer": {
+                          "x": 1800,
+                          "y": 1200,
+                          "name": "Guest Message Received"
+                        },
+                        "interface": [
+                          {
+                            "help": "Confirmation that the guest's message was received sent back to Chase via iOS Shortcut",
+                            "name": "guest_message_received",
+                            "type": "text",
+                            "label": "",
+                            "default": "",
+                            "required": true,
+                            "multiline": false
+                          }
+                        ],
+                        "parameters": [
+                          {
+                            "name": "scenario",
+                            "type": "scenario",
+                            "label": "Scenario",
+                            "required": true
+                          },
+                          {
+                            "name": "shouldWaitForExecutionEnd",
+                            "type": "boolean",
+                            "label": "Wait for the scenario to finish",
+                            "required": true
+                          }
+                        ]
+                      },
+                      "parameters": {
+                        "scenario": "SCN_4658011",
+                        "shouldWaitForExecutionEnd": true
+                      }
+                    },
+                    {
+                      "id": 462,
+                      "mapper": {
+                        "body": "{{460.guest_message_received}}",
+                        "status": "200",
+                        "headers": []
+                      },
+                      "module": "gateway:WebhookRespond",
+                      "version": 1,
+                      "metadata": {
+                        "expect": [
+                          {
+                            "name": "status",
+                            "type": "uinteger",
+                            "label": "Status",
+                            "required": true,
+                            "validate": {
+                              "min": 100
+                            }
+                          },
+                          {
+                            "name": "body",
+                            "type": "any",
+                            "label": "Body"
+                          },
+                          {
+                            "name": "headers",
+                            "spec": [
+                              {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key",
+                                "required": true,
+                                "validate": {
+                                  "max": 256
+                                }
+                              },
+                              {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value",
+                                "required": true,
+                                "validate": {
+                                  "max": 4096
+                                }
+                              }
+                            ],
+                            "type": "array",
+                            "label": "Custom headers",
+                            "validate": {
+                              "maxItems": 16
+                            }
+                          }
+                        ],
+                        "restore": {
+                          "expect": {
+                            "headers": {
+                              "mode": "chose"
+                            }
+                          }
+                        },
+                        "designer": {
+                          "x": 2100,
+                          "y": 1200
+                        }
+                      },
+                      "parameters": {}
+                    }
+                  ]
+                },
+                {
+                  "flow": [
+                    {
+                      "id": 405,
+                      "filter": {
+                        "name": "First Message?",
+                        "conditions": [
+                          [
+                            {
+                              "a": "{{401.warm_handoff}}",
+                              "o": "notexist"
+                            }
+                          ]
+                        ]
+                      },
+                      "mapper": {
+                        "data": {
+                          "phone": "{{392.phone}}",
+                          "message": "{{392.message}}"
+                        }
+                      },
+                      "module": "scenario-service:CallSubscenario",
+                      "version": 2,
+                      "metadata": {
+                        "expect": [
+                          {
+                            "name": "data",
+                            "spec": [
+                              {
+                                "name": "phone",
+                                "type": "text",
+                                "label": "",
+                                "required": true
+                              },
+                              {
+                                "name": "message",
+                                "type": "text",
+                                "label": "",
+                                "required": true
+                              }
+                            ],
+                            "type": "collection",
+                            "label": "Scenario Inputs"
+                          }
+                        ],
+                        "restore": {
+                          "parameters": {
+                            "scenario": {
+                              "label": "1A: Warm Handoff"
+                            }
+                          }
+                        },
+                        "designer": {
+                          "x": 1887,
+                          "y": 1614,
+                          "name": "Warm Handoff"
+                        },
+                        "interface": [
+                          {
+                            "help": "Warm handoff message that gets sent back to Chase via iOS Shortcut",
+                            "name": "warm_handoff_message",
+                            "type": "text",
+                            "label": "",
+                            "default": "",
+                            "required": true,
+                            "multiline": false
+                          }
+                        ],
+                        "parameters": [
+                          {
+                            "name": "scenario",
+                            "type": "scenario",
+                            "label": "Scenario",
+                            "required": true
+                          },
+                          {
+                            "name": "shouldWaitForExecutionEnd",
+                            "type": "boolean",
+                            "label": "Wait for the scenario to finish",
+                            "required": true
+                          }
+                        ]
+                      },
+                      "parameters": {
+                        "scenario": "SCN_4653036",
+                        "shouldWaitForExecutionEnd": true
+                      }
+                    },
+                    {
+                      "id": 43,
+                      "mapper": {
+                        "body": "{{405.warm_handoff_message}}",
+                        "status": "200",
+                        "headers": []
+                      },
+                      "module": "gateway:WebhookRespond",
+                      "version": 1,
+                      "metadata": {
+                        "expect": [
+                          {
+                            "name": "status",
+                            "type": "uinteger",
+                            "label": "Status",
+                            "required": true,
+                            "validate": {
+                              "min": 100
+                            }
+                          },
+                          {
+                            "name": "body",
+                            "type": "any",
+                            "label": "Body"
+                          },
+                          {
+                            "name": "headers",
+                            "spec": [
+                              {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key",
+                                "required": true,
+                                "validate": {
+                                  "max": 256
+                                }
+                              },
+                              {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value",
+                                "required": true,
+                                "validate": {
+                                  "max": 4096
+                                }
+                              }
+                            ],
+                            "type": "array",
+                            "label": "Custom headers",
+                            "validate": {
+                              "maxItems": 16
+                            }
+                          }
+                        ],
+                        "restore": {
+                          "expect": {
+                            "headers": {
+                              "mode": "chose"
+                            }
+                          }
+                        },
+                        "designer": {
+                          "x": 2228,
+                          "y": 1625,
+                          "name": "send message back to iPhone"
+                        }
+                      },
+                      "parameters": {}
+                    }
+                  ],
+                  "disabled": true
+                }
+              ],
+              "version": 1,
+              "metadata": {
+                "designer": {
+                  "x": 1500,
+                  "y": 1350
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 600
+        }
+      }
+    }
+  ],
+  "name": "00: Orchestrator",
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "1": {
+          "phone": "+17252310373",
+          "source": "shortcut",
+          "message": "Hi Chase, blaire smith here! 2 girls for dombresky guest list at liv please"
+        },
+        "10": {
+          "key": "+17252310373"
+        },
+        "19": {
+          "exist": false
+        },
+        "108": {
+          "fields": {
+            "Name": " ",
+            "Party": 0,
+            "Phone": "+17252310373",
+            "Status": "pending",
+            "recordID": "recI8SoOCQAdo",
+            "Date Added": 1775706375945,
+            "Initial Message": "Hi Chase, blaire smith here! 2 girls for dombresky guest list at liv please"
+          },
+          "recordId": "recI8SoOCQAdo",
+          "createdAt": null,
+          "updatedAt": null
+        },
+        "370": {
+          "key": "+17252310373"
+        },
+        "392": {
+          "phone": "+17252310373",
+          "source": "shortcut",
+          "message": "Hi Chase, blaire smith here! 2 girls for dombresky guest list at liv please"
+        },
+        "401": {
+          "fields": {
+            "fname": "Blaire",
+            "lname": "Smith",
+            "males": "0",
+            "females": 2,
+            "venue_name": "LIV",
+            "event_requested": "Dombresky"
+          },
+          "missing": [],
+          "category": "standard",
+          "priority": "normal",
+          "sms_capable": true,
+          "first message": "Hi Chase, blaire smith here! 2 girls for dombresky guest list at liv please",
+          "imessage_capable": false,
+          "last_inbound_reply": "Hi Chase, blaire smith here! 2 girls for dombresky guest list at liv please",
+          "last_outbound_draft": "Hey Blaire, Chase asked me to reach out about the Dombresky guest list at LIV. The soonest date is A...",
+          "aitable_guest_record_id": "recQoSsqgN7SN"
+        },
+        "405": {
+          "warm_handoff_message": "yo blaire! got you for 2 at liv for dombresky, that's gonna be fire. someone from my team will hit y..."
+        },
+        "460": {
+          "guest_message_received": "hey chase, got the guest's info and added it to the database: +17252310373, recI8SoOCQAdo. blaire sm..."
+        },
+        "461": {
+          "Venue": null,
+          "event_date": null,
+          "draft_message": "Hey Blaire, Chase has you on the Dombresky guest list at LIV Las Vegas on Apr 10 at 10:30 PM. I just...",
+          "event_requested": null,
+          "draft_message_id": "rect3WCwBMXvW"
+        },
+        "500": {
+          "data": "Accepted",
+          "headers": {
+            "date": "Thu, 09 Apr 2026 03:46:16 GMT",
+            "cf-ray": "9e9686129bb6c948-IAD",
+            "server": "cloudflare",
+            "connection": "keep-alive",
+            "set-cookie": [
+              "__cf_bm=qA1rsrH8bYqE_CGrOwvG7CqLsGWUqaDsMBEFlBeZwG0-1775706376-1.0.1.1-mebkwcna0EDO7mR6sZZ8X9sxDnHHS..."
+            ],
+            "content-type": "text/plain; charset=utf-8",
+            "x-powered-by": "Make Gateway/production",
+            "content-length": "8",
+            "cf-cache-status": "DYNAMIC",
+            "make-actual-status": "200",
+            "strict-transport-security": "max-age=31536000; includeSubDomains",
+            "access-control-allow-origin": "*"
+          },
+          "statusCode": 200
+        },
+        "501": {
+          "fields": {
+            "fname": "Blaire",
+            "lname": "Smith",
+            "males": "0",
+            "females": 2,
+            "venue_name": "LIV",
+            "event_requested": "Dombresky",
+            "event_found_date": "2026-04-10",
+            "event_found_venue": "LIV Las Vegas",
+            "event_found_performer": "DOMBRESKY"
+          },
+          "missing": [],
+          "category": "standard",
+          "priority": "normal",
+          "sms_capable": true,
+          "first message": "Hi Chase, blaire smith here! 2 girls for dombresky guest list at liv please",
+          "imessage_capable": false,
+          "last_inbound_reply": "Hi Chase, blaire smith here! 2 girls for dombresky guest list at liv please",
+          "last_outbound_draft": "Hey Blaire, Chase has you on the Dombresky guest list at LIV Las Vegas on Apr 10 at 10:30 PM. I just...",
+          "aitable_guest_record_id": "recI8SoOCQAdo"
+        },
+        "502": {
+          "data": "Accepted",
+          "headers": {
+            "date": "Thu, 09 Apr 2026 03:46:39 GMT",
+            "cf-ray": "9e9686a64eaa28c0-IAD",
+            "server": "cloudflare",
+            "connection": "keep-alive",
+            "set-cookie": [
+              "__cf_bm=2KrtyOQnjnRyDo0icKnuNXq0JF.L2D0GGJssiHbQoQw-1775706399-1.0.1.1-wUe.lUoHpC20QYziwtzQnDS0ahy3C..."
+            ],
+            "content-type": "text/plain; charset=utf-8",
+            "x-powered-by": "Make Gateway/production",
+            "content-length": "8",
+            "cf-cache-status": "DYNAMIC",
+            "make-actual-status": "200",
+            "strict-transport-security": "max-age=31536000; includeSubDomains",
+            "access-control-allow-origin": "*"
+          },
+          "statusCode": 200
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}

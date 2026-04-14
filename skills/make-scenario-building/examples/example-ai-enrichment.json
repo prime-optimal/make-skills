@@ -1,0 +1,455 @@
+{
+  "flow": [
+    {
+      "id": 4,
+      "mapper": {},
+      "module": "scenario-service:StartSubscenario",
+      "version": 2,
+      "metadata": {
+        "restore": {},
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "interface": [
+          {
+            "help": "Raw inbound message from the guest",
+            "name": "message",
+            "type": "text",
+            "label": "",
+            "default": "Hey Chase can I get on the guest list for Dombresky please, 2 girls",
+            "required": true,
+            "multiline": false
+          },
+          {
+            "help": "Guest phone number in E.164 format",
+            "name": "phone",
+            "type": "text",
+            "label": "",
+            "default": "+17252310373",
+            "required": true,
+            "multiline": false
+          }
+        ]
+      },
+      "parameters": {}
+    },
+    {
+      "id": 20,
+      "mapper": {
+        "limit": "1",
+        "fields": [
+          "First Name",
+          "Last Name",
+          "Females",
+          "Males",
+          "Artist",
+          "Venue",
+          "Referral",
+          "Instagram"
+        ],
+        "spaceId": "spcGaCMuSZBA3",
+        "fieldKey": "name",
+        "filterType": "filterByFormula",
+        "datasheetId": "dst04qbY4KfvncxzDX",
+        "filterByFormula": "{Phone}=\"{{4.phone}}\""
+      },
+      "module": "apitable:searchRecord",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Find Guest by Phone"
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:apitable",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 3371846
+      }
+    },
+    {
+      "id": 7,
+      "mapper": {
+        "input": "## Rules\nYou are extracting structured data from a SINGLE inbound text message that a guest sent to Chase (a nightclub promoter). This is part of a multi-turn conversation.\n\n### Priority #1 — Respect KNOWN FACTS\nThe \"Known Facts\" section below lists fields that are ALREADY confirmed from earlier in the conversation. For those fields:\n- Do NOT re-extract them. Return the SAME value that appears in Known Facts.\n- The ONLY exception is if the guest is EXPLICITLY correcting a value (e.g. \"wait, it's actually 3 girls not 2\", \"my name is Mike, not Ryan\").\n- Single-word replies, confirmations, or thank-you messages NEVER count as corrections.\n\n### Priority #2 — Don't hallucinate\nIf a field is NOT confirmed in Known Facts AND NOT mentioned in the current message, leave it empty:\n- String fields → empty string (\"\")\n- Number fields → 0\n\nDo NOT guess, infer, or fill in defaults. Do NOT set girls/guys to 1 just because someone is texting.\n\n### Priority #3 — Classify ambiguous names by context\nIf the current message is ONLY a single word that could be a name AND First Name is already confirmed in Known Facts → that word is the LAST name.\nIf the current message is ONLY a single word that could be a name AND Last Name is already confirmed → that word is the FIRST name.\nIf neither is confirmed and the guest just says one name → put it in First Name.\n\n### Priority #4 — Specific pitfalls\n- Only extract party size when the guest EXPLICITLY states a number or uses unambiguous phrases like \"me and my friend\" (→ 2), \"just me\" (→ 1), \"three of us\" (→ 3), \"2 girls 1 guy\", etc.\n- A message like \"hey\", \"ok\", \"thanks\", or a standalone emoji means NOTHING was specified — echo Known Facts, leave the rest empty/0.\n- Do NOT infer a venue or artist from context. Only extract what the guest literally wrote.\n- Phone numbers, greetings, and emoji are NOT names.\n\n## Known Facts (from prior turns)\nfname: {{20.fields.`First Name`}}\nlname: {{20.fields.`Last Name`}}\ngirls: {{20.fields.Females}}\nguys: {{20.fields.Males}}\nevent_request: {{20.fields.Artist}}\nvenue: {{20.fields.Venue}}\nreferral_source: {{20.fields.Referral}}\ninstagram: {{20.fields.Instagram}}\nevent_date: {{20.linkedEvent.Date}}\n\n## Current Message\nPhone: {{var.input.phone}}\nMessage: {{var.input.message}}",
+        "fields": [
+          {
+            "name": "fname",
+            "type": "string",
+            "description": "The first name of the person sending the message.  \nRules:\n1.  This can be blank.\n2.  This CANNOT be set to \"Chase\" because Chase is receiving this message."
+          },
+          {
+            "name": "lname",
+            "type": "string",
+            "description": "last name"
+          },
+          {
+            "name": "girls",
+            "type": "number",
+            "description": "Number of girls in the party, including the sender.  0 if not mentioned."
+          },
+          {
+            "name": "guys",
+            "type": "number",
+            "description": "Number of guys in the party, including the sender.  0 if not mentioned."
+          },
+          {
+            "name": "event_request",
+            "type": "string",
+            "description": "Name of Artist, DJ, Performer, or Event"
+          },
+          {
+            "name": "event_date",
+            "type": "string",
+            "description": "Date of Event.\n\nThis may not be specified, but you may be able to infer it based on their message.  \n\nFor example, if they say \"this Friday\", then you must infer the date by using today's date as a starting point.\n\nToday's date is {{formatDate(now; \"YYYY-MM-DD\")}}\n\nIf they say something like \"this weekend\", then set the date to the nearest upcoming Friday.\n\nIf they say something like \"next month\", set the date to first day of that month."
+          },
+          {
+            "name": "venue",
+            "type": "string",
+            "description": "Name of Venue\nIt usually will be one of these:\n- LIV\n- LIV Beach\n- XS\n- EBC\n- Hakkasan\n- Drai's\n- Marquee\n\nThis may not be specified, so it's okay to leave it blank."
+          },
+          {
+            "name": "referral_source",
+            "type": "string",
+            "description": "Who referred the guest?  Sometimes this is mentioned, usually it's not."
+          },
+          {
+            "name": "instagram",
+            "type": "string",
+            "description": "Instagram handle, if mentioned."
+          }
+        ]
+      },
+      "module": "ai-tools:Extract",
+      "version": 2,
+      "metadata": {
+        "expect": [
+          {
+            "name": "input",
+            "type": "text",
+            "label": "Text",
+            "required": true
+          },
+          {
+            "name": "fields",
+            "spec": {
+              "name": "value",
+              "spec": [
+                {
+                  "name": "name",
+                  "type": "text",
+                  "label": "Name",
+                  "required": true
+                },
+                {
+                  "name": "description",
+                  "type": "text",
+                  "label": "Description",
+                  "required": true
+                },
+                {
+                  "name": "type",
+                  "type": "select",
+                  "label": "Type",
+                  "options": [
+                    {
+                      "label": "Text",
+                      "value": "string"
+                    },
+                    {
+                      "label": "Number",
+                      "value": "number"
+                    },
+                    {
+                      "label": "Boolean",
+                      "value": "boolean"
+                    }
+                  ],
+                  "required": true
+                }
+              ],
+              "type": "collection",
+              "label": "Information"
+            },
+            "type": "array",
+            "label": "Information",
+            "required": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "fields": {
+              "items": [
+                {
+                  "type": {
+                    "mode": "chose",
+                    "label": "Text"
+                  }
+                },
+                {
+                  "type": {
+                    "mode": "chose",
+                    "label": "Text"
+                  }
+                },
+                {
+                  "type": {
+                    "mode": "chose",
+                    "label": "Number"
+                  }
+                },
+                {
+                  "type": {
+                    "mode": "chose",
+                    "label": "Number"
+                  }
+                },
+                {
+                  "type": {
+                    "mode": "chose",
+                    "label": "Text"
+                  }
+                },
+                {
+                  "type": {
+                    "mode": "chose",
+                    "label": "Text"
+                  }
+                },
+                {
+                  "type": {
+                    "mode": "chose",
+                    "label": "Text"
+                  }
+                },
+                {
+                  "type": {
+                    "mode": "chose",
+                    "label": "Text"
+                  }
+                },
+                {
+                  "type": {
+                    "mode": "chose",
+                    "label": "Text"
+                  }
+                }
+              ]
+            }
+          },
+          "parameters": {
+            "model": {
+              "mode": "chose",
+              "label": "MediumModel: gpt-5-nano. Reasoning: low. A balanced, quick choice for clearly defined tasks needing reliable answers rather than deep analysis",
+              "nested": []
+            },
+            "makeConnectionId": {
+              "data": {
+                "scoped": "true",
+                "connection": "ai-provider"
+              },
+              "label": "My Make's AI Provider connection"
+            }
+          }
+        },
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Extract Info"
+        },
+        "parameters": [
+          {
+            "name": "makeConnectionId",
+            "type": "account:ai-provider,openai-gpt-3,anthropic-claude,gemini-ai-q9zyjp,ai-agent-foundry-openai,ai-agent-foundry-non-openai,mistral-ai,cohere,groq,ai-agent-xai,amazon-bedrock,ai-agent-openai-compatible",
+            "label": "Connection",
+            "required": true
+          },
+          {
+            "name": "model",
+            "type": "select",
+            "label": "Model",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "model": "medium",
+        "makeConnectionId": 4719756
+      }
+    },
+    {
+      "id": 21,
+      "mapper": {
+        "records": [
+          {
+            "fields": {
+              "Males": "{{if(7.information.guys > 0; 7.information.guys; 20.fields.Males)}}",
+              "Venue": "{{ifempty(7.information.venue; 20.fields.Venue)}}",
+              "Artist": "{{ifempty(7.information.event_request; 20.fields.Artist)}}",
+              "Females": "{{if(7.information.girls > 0; 7.information.girls; 20.fields.Females)}}",
+              "Referral": "{{ifempty(7.information.referral_source; 20.fields.Referral)}}",
+              "Instagram": "{{ifempty(7.information.instagram; 20.fields.Instagram)}}",
+              "Last Name": "{{ifempty(7.information.lname; 20.fields.`Last Name`)}}",
+              "First Name": "{{ifempty(7.information.fname; 20.fields.`First Name`)}}"
+            },
+            "recordId": "{{20.recordId}}"
+          }
+        ],
+        "spaceId": "spcGaCMuSZBA3",
+        "fieldKey": "name",
+        "datasheetId": "dst04qbY4KfvncxzDX"
+      },
+      "module": "apitable:updateRecords",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0,
+          "name": "Update Guest with Extracted Fields"
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:apitable",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 3371846
+      }
+    },
+    {
+      "id": 3,
+      "mapper": {
+        "guys": "{{7.information.guys}}",
+        "fname": "{{7.information.fname}}",
+        "girls": "{{7.information.girls}}",
+        "lname": "{{7.information.lname}}",
+        "venue": "{{7.information.venue}}",
+        "referral": "{{7.information.referral_source}}",
+        "instagram": "{{7.information.instagram}}",
+        "event_date": "{{7.information.event_date}}",
+        "event_request": "{{7.information.event_request}}"
+      },
+      "module": "scenario-service:ReturnData",
+      "version": 2,
+      "metadata": {
+        "expect": [
+          {
+            "name": "fname",
+            "type": "text",
+            "label": ""
+          },
+          {
+            "name": "lname",
+            "type": "text",
+            "label": ""
+          },
+          {
+            "name": "girls",
+            "type": "number",
+            "label": ""
+          },
+          {
+            "name": "guys",
+            "type": "number",
+            "label": ""
+          },
+          {
+            "name": "venue",
+            "type": "text",
+            "label": ""
+          },
+          {
+            "name": "event_request",
+            "type": "text",
+            "label": ""
+          },
+          {
+            "name": "event_date",
+            "type": "text",
+            "label": ""
+          },
+          {
+            "name": "referral",
+            "type": "text",
+            "label": ""
+          },
+          {
+            "name": "instagram",
+            "type": "text",
+            "label": ""
+          }
+        ],
+        "designer": {
+          "x": 1200,
+          "y": 0,
+          "name": "Return Extracted Data"
+        }
+      },
+      "parameters": {}
+    }
+  ],
+  "name": "2A: Extract & Classify",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "3": {
+          "guys": 0,
+          "fname": "",
+          "girls": 2,
+          "lname": "",
+          "venue": "",
+          "category": "standard",
+          "priority": "normal",
+          "event_date": "",
+          "event_request": "Dombresky"
+        },
+        "4": {
+          "phone": "+17252310373",
+          "message": "Hey Chase can I get on the guest list for Dombresky please, 2 girls",
+          "today_date": "2026-04-02"
+        },
+        "7": {
+          "AIUsage": {
+            "inputTokens": 1224,
+            "outputTokens": 371
+          },
+          "information": {
+            "guys": 0,
+            "fname": "",
+            "girls": 2,
+            "lname": "",
+            "venue": "",
+            "event_date": "",
+            "event_request": "Dombresky"
+          }
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}

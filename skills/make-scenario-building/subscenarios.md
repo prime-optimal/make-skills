@@ -35,6 +35,20 @@ Subscenarios allow you to break complex automations into smaller, reusable scena
 
 You define a structured set of **scenario inputs** (data the parent passes in) and **scenario outputs** (data the subscenario returns). This gives a clear contract between parent and child.
 
+### Best Practice: Start Scenario Trigger + SetVariable Buffer
+
+**Always use `Start scenario` as the trigger** for subscenarios (not a webhook or polling trigger). This gives better debugging visibility in the parent — the `Call a scenario` module in the parent's execution log shows the input/output data flowing through.
+
+**Place a `Set Variable(s)` module as module 2** immediately after the trigger. Re-assign all inputs to variables:
+
+```
+Start scenario (phone, message) → Set Variables (phone = {{var.input.phone}}, message = {{var.input.message}}) → ... rest of flow
+```
+
+This pattern provides two benefits:
+1. **Trigger decoupling.** If the trigger is swapped later (e.g., webhook → Start Scenario, or vice versa), no downstream modules break — they all reference the SetVariable output, not the trigger.
+2. **Fast debugging.** Temporarily set the trigger on the SetVariable module and click "Run" to start from there with hardcoded test values. No need to fire a webhook or call from a parent scenario. This saves significant time during development.
+
 ## Flowchart Notation
 
 ```
@@ -64,8 +78,47 @@ The "Inventory Check" subscenario:
 Scenarios - Start scenario [inputs: product_id, quantity] → Database - Query Stock → Scenarios - Return outputs [available: true/false, stock_count]
 ```
 
+## Setting the Interface (Inputs & Outputs)
+
+The scenario interface is what controls which fields are available in the `Start scenario` trigger (inputs) and the `Return outputs` module (outputs). **This is the most common source of confusion:** if the `Return outputs` module shows no fields or wrong fields, the scenario interface has not been set.
+
+### Via MCP / API
+
+Use `scenarios_set-interface` to define inputs and outputs programmatically:
+
+```json
+{
+  "scenarioId": 12345,
+  "interface": {
+    "input": [
+      {"name": "message", "type": "text", "required": true, "help": "Raw inbound message"},
+      {"name": "phone", "type": "text", "required": true, "help": "Phone in E.164 format"}
+    ],
+    "output": [
+      {"name": "fname", "type": "text", "required": false, "help": "Extracted first name"},
+      {"name": "priority", "type": "text", "required": true, "help": "normal / high / urgent"}
+    ]
+  }
+}
+```
+
+### CRITICAL — Both sides need interfaces
+
+Setting the interface is required on **both** the subscenario and the calling (parent) scenario:
+
+1. **Subscenario interface** — Defines what `Return outputs` can send back. Without this, the `Return outputs` module has no fields to map.
+2. **Parent scenario interface** — Defines what the parent's own `Return outputs` module can surface. If the parent is itself a subscenario (or needs to pass data through), its output interface must include the fields from the child.
+
+The `Call a scenario` module reads the **child's** output interface to know what fields it receives. The parent's `Return outputs` module reads the **parent's** output interface to know what fields it can emit. If either is missing, the corresponding module shows no mappable fields.
+
+### Via the Make UI
+
+Go to the scenario editor → click the three-dot menu (⋯) next to the scenario name → **Scenario Inputs/Outputs**. Define the fields there. This is the same as calling `scenarios_set-interface` via the API.
+
 ## Gotchas
 
+- **Interface determines ReturnData fields.** The `Return outputs` module only exposes fields defined in the scenario's interface. If you add a `Return outputs` module but see no fields, you haven't set the output interface. This applies to both the subscenario AND the calling scenario. See "Setting the Interface" above.
+- **`Return outputs` terminates the ENTIRE scenario.** When a `Return outputs` module executes, it kills the whole scenario execution — including any Router routes that haven't fired yet. If the calling scenario has a Router with multiple routes after the `Call a scenario` module, and one route hits `Return outputs`, the other routes will never run. **Workaround:** Use a Data Store as a shared state bus instead of `Return outputs`. Subscenarios write results to the DS (keyed by a shared identifier like phone number), and the calling scenario reads from DS after the call. Each route reads DS at the top and writes back at the bottom, so data flows through progressively without terminating execution.
 - **Same team only.** You can only call scenarios within your team. For cross-team or cross-organization calls, use `Make > Run a scenario` or `Webhooks > Custom webhook` instead.
 - **Nesting depth.** A subscenario can itself call other subscenarios (acting as a parent). Be mindful of execution depth and timeouts.
 - **Async has no outputs.** In async mode, the parent doesn't receive any data back. If you need results, use sync mode.
